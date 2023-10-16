@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import SearchBox from './components/SearchBox.vue'; // Asegúrate de importar el componente
+import SearchBox from './components/SearchBox.vue'; 
 import WeatherDisplay from './components/WeatherDisplay.vue';
 export default {
   name: 'app',
