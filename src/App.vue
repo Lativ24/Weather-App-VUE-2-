@@ -2,34 +2,27 @@
   <div id="app" :class="typeof weather.main != 'undefined' && weather.main.temp > 16 ? 'warm' : ''">
 <main>
   <search-box @search="fetchWeather"></search-box>
-  <div class="weather-wrap" v-if="typeof weather.main != 'undefined'">
-    <div class="location-box">
-      <div class="location">{{ weather.name }}, {{ weather.sys.country }}</div>
-      <div class="date">{{ dateBuilder() }}</div>
-    </div>
-    <div class="weather-box">
-      <div class="temp">{{ Math.round(weather.main.temp) }}°C</div>
-      <div class="weather">{{ weather.weather[0].main}}</div>
-    </div>
-  </div>
+  <weather-display :weather="weather"></weather-display>
 </main>
   </div>
 </template>
 
 <script>
 import SearchBox from './components/SearchBox.vue'; // Asegúrate de importar el componente
+import WeatherDisplay from './components/WeatherDisplay.vue';
 export default {
   name: 'app',
   components: {
     'search-box': SearchBox, 
+    'weather-display': WeatherDisplay,
   },
   data(){
     return{
       api_key:'51549e0c5273fe51c515c1a71caa5e95',
       url_base: 'https://api.openweathermap.org/data/2.5/',
       query:'',
-      weather:{}
-    }
+      weather:{},
+    };
   },
   methods:{
     fetchWeather(location){
@@ -42,17 +35,7 @@ export default {
     setResults(results){
       this.weather=results;
     },
-    dateBuilder(){
-      let d = new Date();
-      let months=["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Setiembre", "Octubre", "Noviembre", "Diciembre"]
-      let days =["Domingo", "Lunes", "Martes", "Miercoles", "Jueves","Viernes", "Sabado"]
-      
-      let day=days[d.getDay()];
-      let date=d.getDate();
-      let month=months[d.getMonth()];
-      let year=d.getFullYear();
-      return `${day} ${date} ${month} ${year}`; 
-    }
+  
   }
 
 }
